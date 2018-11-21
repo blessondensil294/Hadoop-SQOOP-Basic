@@ -1,0 +1,98 @@
+RDBMS
+	Data importing is tedious task
+	Difficult to handle large dataset
+	cant store unstructured dataset
+	time consuming task
+
+Sqoop (SQl + hadOOP)
+	YARN framework to Importin bulk data from RDBMS to HDFS and export bulk data from HDFS to RDBMS
+	Mapreduce for import and export operations
+
+Need
+	Data Analysis
+	Command Line Interface
+	High performace
+
+Features
+	Full Load of the whole database in a single command
+	incremental load - 
+	parallel import/export - based on YARN framework to parallel the work
+	Compression - Compress the data 
+	Kerberos Security integration - secure network between different network
+	Data loaded directly to HIVE
+
+	-------------------------------------------------------------------
+ORACLE cmd line to view the table and db
+oracle -u username
+
+create database Ret;
+show database;
+use Ret;
+
+show tables;
+
+select * from employees
+----------------------------------------------------------------------------
+
+SQOOP Commands
+create-hive-table
+eval
+export
+import
+import-all-tables
+job
+list-databases
+list-tables
+merge
+
+Help
+sqoop help - to get the commands in sqoop
+
+Commands
+
+Import Command - to import the bulk data from RDBMS to HDFS part files 
+sqoop import 
+	--connect jdbc:oracle://<ip address>/<database name>
+	--table <oracle tablename>
+	--username <username> 
+	--password <password>
+	--m <no of map file>
+	--target-dir <HDFS target dir>
+	--where <"condition">
+
+eg
+sqoop import --connect jdbc:oracle://localhost/emp --username Blesson --table employees --m 3 --where "emp_no > 49000" --target-dir /employee10
+
+Import all Tables - to import all the tables from the database and store it in different directory with the same name
+
+sqoop import-all-tables --connect jdbc:oracle://localhost/emp --username Blesson --target-dir /db-emp
+
+Export Command - export data from hdfs to rdbms
+sqoop export 
+	--connect jdbc:oracle://<ip address>/<database name>
+	--table <oracle tablename>
+	--username <username> 
+	--password <password>
+	--export-dir <HDFS target dir>
+	
+	
+eg
+sqoop import --connect jdbc:oracle://localhost/emp --username Blesson --table employees --target-dir /employee10
+
+List Database - to list all the database in the RDBMS database
+sqoop list-databases 
+	--connect jdbc:oracle://<ip address>/
+	--username <username> 
+	--password <password>
+
+eg
+sqoop list-databases --connect jdbc:oracle://localhost/ --username Blesson
+	
+List Tables - to list all the database in the RDBMS database
+sqoop list-tables 
+	--connect jdbc:oracle://<ip address>/<database name>
+	--username <username> 
+	--password <password>
+
+eg
+sqoop list-tables --connect jdbc:oracle://localhost/emp --username Blesson
